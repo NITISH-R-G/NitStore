@@ -71,12 +71,125 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } catch (error) {
             console.error('Core Exception:', error);
-            updateStatus('ERR: CONNECTION REFUSED', true);
-            productGrid.innerHTML = `
-                <div style="grid-column: 1/-1; text-align: center; padding: 60px; font-family: var(--font-mono); color: var(--error-color);">
-                    FATAL_ERROR: Failed to establish REST handshake. Check products.json availability.
-                </div>
-            `;
+            // Seamless offline/local fallback if opened directly via file:// protocol
+            if (window.location.protocol === 'file:') {
+                console.warn('Running via file:// protocol. Activating offline fallback catalog.');
+                updateStatus('SYSTEM OK // LOCAL MODE ACTIVATED');
+                allProducts = [
+                    {
+                        "id": "prod_01",
+                        "title": "Grovemade Desk Shelf",
+                        "category": "Workspace",
+                        "price": 240.00,
+                        "image": "https://images.unsplash.com/photo-1593640408182-31c70c8268f5?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Crafted from premium walnut. Elevates your monitor and organizes your essentials.",
+                        "badge": "Classic"
+                    },
+                    {
+                        "id": "prod_02",
+                        "title": "NuPhy Air75 Keyboard",
+                        "category": "Peripherals",
+                        "price": 129.00,
+                        "image": "https://images.unsplash.com/photo-1595225476474-87563907a212?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Ultra-slim wireless mechanical keyboard with low-profile Gateron switches.",
+                        "badge": "Popular"
+                    },
+                    {
+                        "id": "prod_03",
+                        "title": "MX Master 3S",
+                        "category": "Peripherals",
+                        "price": 99.00,
+                        "image": "https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Ergonomic precision mouse with quiet clicks and an electromagnetic scroll wheel."
+                    },
+                    {
+                        "id": "prod_04",
+                        "title": "Minimalist Desk Pad",
+                        "category": "Workspace",
+                        "price": 45.00,
+                        "image": "https://images.unsplash.com/photo-1616423640778-28d1b53229bd?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Premium matte leather desk mat. Provides a smooth, non-slip surface for deep work."
+                    },
+                    {
+                        "id": "prod_05",
+                        "title": "Lamy 2000 Pen",
+                        "category": "Stationery",
+                        "price": 199.00,
+                        "image": "https://images.unsplash.com/photo-1585336261022-680e295ce3fe?auto=format&fit=crop&q=80&w=1000",
+                        "description": "An iconic Bauhaus design. Brushed Makrolon and stainless steel fountain pen."
+                    },
+                    {
+                        "id": "prod_06",
+                        "title": "reMarkable 2",
+                        "category": "Focus",
+                        "price": 299.00,
+                        "image": "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&q=80&w=1000",
+                        "description": "The next-generation paper tablet. Zero distractions, purely designed for thinking.",
+                        "badge": "Bestseller"
+                    },
+                    {
+                        "id": "prod_07",
+                        "title": "TP-7 Field Recorder",
+                        "category": "Audio",
+                        "price": 1499.00,
+                        "image": "https://images.unsplash.com/photo-1558403194-611308249627?auto=format&fit=crop&q=80&w=1000",
+                        "description": "A pocket-sized engineering marvel. Tactile motorized tape reel and studio-grade sound.",
+                        "badge": "Limited"
+                    },
+                    {
+                        "id": "prod_08",
+                        "title": "Nothing Phone (2)",
+                        "category": "Tech",
+                        "price": 599.00,
+                        "image": "https://images.unsplash.com/photo-1688649102473-099b9d16aa32?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Experience the Glyph Interface. A unique approach to light and sound notifications.",
+                        "badge": "New"
+                    },
+                    {
+                        "id": "prod_09",
+                        "title": "Sony WH-1000XM5",
+                        "category": "Audio",
+                        "price": 349.00,
+                        "image": "https://images.unsplash.com/photo-1546435770-a3e426bf472b?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Industry-leading noise cancellation. Crystal-clear hands-free calling and Alexa voice control."
+                    },
+                    {
+                        "id": "prod_10",
+                        "title": "Keychron Q1 Pro",
+                        "category": "Peripherals",
+                        "price": 199.00,
+                        "image": "https://images.unsplash.com/photo-1511467687858-23d96c32e4ae?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Fully customizable QMK/VIA wireless mechanical keyboard in a solid aluminum body.",
+                        "badge": "Premium"
+                    },
+                    {
+                        "id": "prod_11",
+                        "title": "Nomad Base One Max",
+                        "category": "Power",
+                        "price": 149.00,
+                        "image": "https://images.unsplash.com/photo-1622445275463-afa2ab738c34?auto=format&fit=crop&q=80&w=1000",
+                        "description": "Official MagSafe charging at 15W. Weighted glass and metal design for your bedside."
+                    },
+                    {
+                        "id": "prod_12",
+                        "title": "Apple Vision Pro",
+                        "category": "Computing",
+                        "price": 3499.00,
+                        "image": "https://images.unsplash.com/photo-1622979135225-d2ba269cf1ac?auto=format&fit=crop&q=80&w=1000",
+                        "description": "The ultimate spatial computer. Blend digital content with your physical world seamlessly.",
+                        "badge": "Futuristic"
+                    }
+                ];
+                renderHardware(allProducts);
+                setupFilters();
+            } else {
+                updateStatus('ERR: CONNECTION REFUSED', true);
+                productGrid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px; font-family: var(--font-mono); color: var(--error-color);">
+                        FATAL_ERROR: Failed to establish REST handshake. Check products.json availability.
+                    </div>
+                `;
+            }
         } finally {
             loader.style.display = 'none';
         }
@@ -170,7 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const user = usernameInput.value.trim();
         const pass = passwordInput.value.trim();
         
-        if (user === 'admin' && pass === 'mith-secure') {
+        if (user === 'admin' && pass === 'nit-secure') {
             // Success State
             authErrorMsg.style.display = 'none';
             

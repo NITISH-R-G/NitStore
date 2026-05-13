@@ -1,6 +1,6 @@
-# MithStore | Minimalist Productivity Store
+# NitStore | Minimalist Productivity Store
 
-**MithStore** is a high-performance, Single Page Application (SPA) built to demonstrate advanced web systems integration concepts. Featuring a premium dark-mode aesthetic, it serves as an e-commerce platform for minimalist productivity tools while integrating core API and security concepts.
+**NitStore** is a high-performance, Single Page Application (SPA) built to demonstrate advanced web systems integration concepts. Featuring a premium dark-mode aesthetic, it serves as an e-commerce platform for minimalist productivity tools while integrating core API and security concepts.
 
 > **Live Demo**: [Insert Vercel/Netlify Link Here]
 
@@ -31,21 +31,20 @@ To test the authentication flow and view the integrated architecture documentati
 1. Click on the **Login** tab in the navigation bar.
 2. Enter the following credentials:
    * **Username**: `admin`
-   * **Password**: `mith-secure`
+   * **Password**: `nit-secure`
 3. Upon verification, the UI will transition to the Developer Dashboard, revealing the generated JWT and backend documentation.
 
 ---
 
 ## 💻 Local Installation
 
-Because this application utilizes the Fetch API to retrieve local JSON data, it must be run on a local web server to avoid browser CORS restrictions.
+Because this application utilizes the Fetch API to retrieve local JSON data, running on a local web server (like **Live Server**) is recommended. However, a **seamless offline fallback** is natively embedded to render the complete catalog even if opened directly via the `file://` protocol.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/MithStore.git
+   git clone https://github.com/yourusername/NitStore.git
    ```
-2. Open the project folder in Visual Studio Code.
-3. Use the **Live Server** extension to launch `index.html`.
+2. Simply open `index.html` in any modern browser, or launch via Live Server for native Fetch API simulation.
 
 ---
 *Built for Advanced Web Systems Integration.*
