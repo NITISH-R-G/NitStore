@@ -48,3 +48,62 @@ Because this application utilizes the Fetch API to retrieve local JSON data, run
 
 ---
 *Built for Advanced Web Systems Integration.*
+
+
+
+<!-- AUTO-GENERATED-DOCS:START -->
+## 🤖 Autonomous Repository Analysis
+
+*Last Updated: 2026-06-06T10:23:50.789Z*
+
+### 🧠 AI Architecture Summary
+*(AI summary generation skipped - No API key provided. Add OPENAI_API_KEY to your repository secrets to enable AI documentation.)*
+
+### 📊 Repository Structure
+```text
+├── README.md
+├── docs
+│   ├── architecture.md
+│   └── data_flow.md
+├── index.html
+├── products.json
+├── script.js
+├── scripts
+│   ├── analysis.json
+│   ├── analyze.js
+│   ├── generate_diagrams.js
+│   └── update_docs.js
+└── style.css
+
+```
+
+### 🛠️ Detected Technologies
+- HTML5
+- CSS3
+- Vanilla JavaScript
+- JSON Data Storage
+
+### 🏗️ Dynamic Architecture Diagram
+
+# Dynamic System Architecture
+
+```mermaid
+graph TD
+    Client[Browser / Client]
+
+    Client --> index.html
+    index_html[index.html]
+    products_json[products.json]
+    script_js[script.js]
+    style_css[style.css]
+
+    index_html -->|script src| script_js
+    index_html -->|CSS link| style_css
+    script_js -->|fetch API| products_json
+
+    classDef file fill:#f9f,stroke:#333,stroke-width:2px;
+    class index_html,products_json,script_js,style_css file;
+```
+
+
+<!-- AUTO-GENERATED-DOCS:END -->
