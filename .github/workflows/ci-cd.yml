@@ -1,0 +1,51 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '0 0 * * 0' # Weekly
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Linting Dependencies
+        run: npm init -y && npm install --save-dev eslint stylelint stylelint-config-standard htmlhint
+
+      - name: Run JavaScript Linting
+        run: npx eslint . || true
+
+      - name: Run CSS Linting
+        run: npx stylelint "**/*.css" || true
+
+      - name: Run HTML Linting
+        run: npx htmlhint "**/*.html" || true
+
+      - name: Run Trivy vulnerability scanner in fs mode
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'fs'
+          ignore-unfixed: true
+          format: 'table'
+          severity: 'CRITICAL,HIGH'
+
+      - name: Check Artifacts
+        run: |
+          if [ -f "index.html" ] && [ -f "script.js" ] && [ -f "style.css" ]; then
+            echo "Build check passed. Core files exist."
+          else
+            echo "Build check failed. Missing core files."
+            exit 1
+          fi
